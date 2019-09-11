@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.springframework</groupId>
-	<artifactId>gs-rest-service</artifactId>
+	<artifactId>tileprovider-rest-service</artifactId>
 	<version>0.1.0</version>
 	<packaging>jar</packaging>
 
@@ -23,32 +23,15 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+		<geotools.version>21.2</geotools.version>
 	</properties>
 
 	<dependencies>
-<!--		<dependency>-->
-<!--			<groupId>org.keycloak</groupId>-->
-<!--			<artifactId>keycloak-spring-boot-starter</artifactId>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.cloud</groupId>-->
-<!--			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.cloud</groupId>-->
-<!--			<artifactId>spring-cloud-starter-zipkin</artifactId>-->
-<!--			<version>2.0.2.RELEASE</version>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.cloud</groupId>-->
-<!--			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>com.jayway.jsonpath</groupId>
 			<artifactId>json-path</artifactId>
@@ -64,11 +47,21 @@
 			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
 			<version>2.0.2.RELEASE</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.keycloak</groupId>-->
-<!--			<artifactId>keycloak-spring-boot-adapter</artifactId>-->
-<!--			<version>6.0.1</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>mil.nga.geopackage</groupId>
+			<artifactId>geopackage</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-main</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-swing</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
 	</dependencies>
 	
 	<dependencyManagement>
@@ -80,21 +73,38 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-<!--			<dependency>-->
-<!--				<groupId>org.keycloak.bom</groupId>-->
-<!--				<artifactId>keycloak-adapter-bom</artifactId>-->
-<!--				<version>6.0.1</version>-->
-<!--				<type>pom</type>-->
-<!--				<scope>import</scope>-->
-<!--			</dependency>-->
 		</dependencies>
 	</dependencyManagement>
-	
+
+	<repositories>
+		<repository>
+			<id>osgeo</id>
+			<name>Open Source Geospatial Foundation Repository</name>
+			<url>http://download.osgeo.org/webdav/geotools/</url>
+		</repository>
+		<repository>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>boundless</id>
+			<name>Boundless Maven Repository</name>
+			<url>http://repo.boundlessgeo.com/main</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>9</source>
+					<target>9</target>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
