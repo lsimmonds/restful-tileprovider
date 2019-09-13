@@ -38,7 +38,6 @@ public class TileProcessor {
         Graphics2D scaledAppender = resized.createGraphics();
         scaledAppender.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-//        scaledAppender.drawImage(appendedImg, 0, 0, scaledWidth, scaledHeight, Color.CYAN, null);
         Point point = new Point(scaledWidth, scaledHeight);
         scaledAppender.drawImage(appendedImg,
                 0,
@@ -113,12 +112,7 @@ public class TileProcessor {
         TileMatrix tileMatrix = tileDaoProvider.getTileDaos().get(0).getTileMatrix(zoom);
         //Get Lat lon for tileGrid to see if we need to cut any off.
         BoundingBox tileGridLatLon = TileBoundingBoxUtils.getWGS84BoundingBox(tileGrid, zoom);
-//        tileGridLatLon.setMinLatitude((tileGrid.getMinY() * latPerTile) - ProjectionConstants.WGS84_HALF_WORLD_LAT_HEIGHT); //Utility gets this wrong
-//        tileGridLatLon.setMaxLatitude(((tileGrid.getMaxY() * latPerTile) + latPerTile) - ProjectionConstants.WGS84_HALF_WORLD_LAT_HEIGHT); //Utility gets this wrong
-//        if (tileGridLatLon.getMaxLatitude() < mapRequest.getBbox().getMaxLatitude()) {
-//            tileGrid.setMaxY(tileGrid.getMaxY() + 1);
-//            tileGridLatLon.setMaxLatitude(tileGridLatLon.getMaxLatitude() + latPerTile);
-//        }
+
         double leftChopPercent = 0;
         double rightChopPercent = 0;
         double topChopPercent = 0;
