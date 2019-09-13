@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ce67d73-f435-4159-97ae-740c67ee15cc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/GeoServerRequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/GeoServerRequestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/GetMapRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/GetMapRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/GetMapResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/GetMapResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/simple_service/restful_service/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/simple_service/restful_service/Application.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -130,7 +136,7 @@
       <workItem from="1562686295021" duration="152000" />
       <workItem from="1568144902862" duration="70000" />
       <workItem from="1568151021890" duration="31161000" />
-      <workItem from="1568304058897" duration="24363000" />
+      <workItem from="1568304058897" duration="26006000" />
     </task>
     <task id="LOCAL-00001" summary="Working prototype">
       <created>1568222836981</created>
@@ -139,7 +145,21 @@
       <option name="project" value="LOCAL" />
       <updated>1568222836981</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Working prototype">
+      <created>1568408722665</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1568408722665</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Comment clean up">
+      <created>1568408819466</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1568408819466</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -175,28 +195,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Working prototype" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working prototype" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/simple_service/restful_service/GeoServerRequestController.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java</url>
-          <line>131</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/mil/nga/geopackage/geopackage-core/3.3.0/geopackage-core-3.3.0-sources.jar!/mil/nga/geopackage/tiles/TileBoundingBoxUtils.java</url>
-          <line>1182</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Comment clean up" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comment clean up" />
   </component>
   <component name="masterDetails">
     <states>

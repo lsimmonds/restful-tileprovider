@@ -21,7 +21,8 @@ public class GeoServerRequestController {
     @RequestMapping(produces = MediaType.IMAGE_JPEG_VALUE, value = {"/service-instances/{applicationName}", "/service-instances/ows", "/service-instances/wms"})
     public byte[] simpleResponse(@RequestParam Map<String, String> queryParameters) {
         GetMapRequest mapRequest = new GetMapRequest(queryParameters, env.getProperty("geopackage.rootPath"));
-        TileProcessor tileProcessor = new TileProcessor(mapRequest);
+        boolean debug = env.getProperty("debug", Boolean.class) == null ? false : env.getProperty("debug", Boolean.class);
+        TileProcessor tileProcessor = new TileProcessor(mapRequest, debug);
 
         try {
             return new GetMapResponse(tileProcessor.getMap()).getBody().readAllBytes();

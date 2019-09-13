@@ -2,12 +2,7 @@ package simple_service.restful_service.wms;
 
 import mil.nga.geopackage.BoundingBox;
 import org.geotools.util.logging.Logging;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 
-import javax.imageio.ImageIO;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

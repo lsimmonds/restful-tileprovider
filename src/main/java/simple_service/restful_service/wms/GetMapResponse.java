@@ -17,15 +17,15 @@ public class GetMapResponse implements ClientHttpResponse {
     private HttpStatus status;
     private BufferedImage mapImage;
 
-	public GetMapResponse(HttpStatus status, BufferedImage image) {
-		this.status = status;
-		mapImage = image;
-	}
+    public GetMapResponse(HttpStatus status, BufferedImage image) {
+        this.status = status;
+        mapImage = image;
+    }
 
-	public GetMapResponse(BufferedImage image) {
-		status = HttpStatus.OK;
-		mapImage = image;
-	}
+    public GetMapResponse(BufferedImage image) {
+        status = HttpStatus.OK;
+        mapImage = image;
+    }
 
     @Override
     public HttpStatus getStatusCode() {
@@ -47,7 +47,7 @@ public class GetMapResponse implements ClientHttpResponse {
     }
 
     @Override
-    public InputStream getBody()  {
+    public InputStream getBody() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] imageInByte = null;
         try {

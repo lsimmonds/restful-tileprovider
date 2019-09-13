@@ -13,24 +13,30 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class TileProcessor {
-    TileDaoProvider tileDaoProvider;
-    GetMapRequest mapRequest;
+    private TileDaoProvider tileDaoProvider;
+    private GetMapRequest mapRequest;
+    private boolean debug = false;
 
     public TileProcessor(GetMapRequest mapRequest) {
         this.mapRequest = mapRequest;
         tileDaoProvider = new TileDaoProvider(mapRequest);
     }
 
-    public static Point appendBufferedImage(BufferedImage originalImg,
-                                            BufferedImage appendedImg,
-                                            int x,
-                                            int y,
-                                            int leftCut,
-                                            int topCut,
-                                            int rightCut,
-                                            int bottomCut,
-                                            double xScale,
-                                            double yScale) {
+    public TileProcessor(GetMapRequest mapRequest, boolean debug) {
+        this(mapRequest);
+        this.debug = debug;
+    }
+
+    public Point appendBufferedImage(BufferedImage originalImg,
+                                     BufferedImage appendedImg,
+                                     int x,
+                                     int y,
+                                     int leftCut,
+                                     int topCut,
+                                     int rightCut,
+                                     int bottomCut,
+                                     double xScale,
+                                     double yScale) {
         int scaledWidth = (int) Math.round((appendedImg.getWidth() - leftCut - rightCut) * xScale);
         int scaledHeight = (int) Math.round((appendedImg.getHeight() - topCut - bottomCut) * yScale);
 
@@ -51,10 +57,10 @@ public class TileProcessor {
                 Color.CYAN,
                 null);
 
-        //For debugging                     ............................//
-        scaledAppender.setStroke(new BasicStroke(1));             //
-        scaledAppender.drawRect(0, 0, scaledWidth, scaledHeight); //
-        //                                  ............................//
+        if (this.debug) {
+            scaledAppender.setStroke(new BasicStroke(1));
+            scaledAppender.drawRect(0, 0, scaledWidth, scaledHeight);
+        }
 
         scaledAppender.dispose();
 
