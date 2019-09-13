@@ -6,6 +6,7 @@ import mil.nga.geopackage.tiles.TileGrid;
 import mil.nga.geopackage.tiles.matrix.TileMatrix;
 import mil.nga.geopackage.tiles.user.TileDao;
 import mil.nga.geopackage.tiles.user.TileRow;
+import mil.nga.sf.Point;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,6 +19,54 @@ public class TileProcessor {
     public TileProcessor(GetMapRequest mapRequest) {
         this.mapRequest = mapRequest;
         tileDaoProvider = new TileDaoProvider(mapRequest);
+    }
+
+    public static Point appendBufferedImage(BufferedImage originalImg,
+                                            BufferedImage appendedImg,
+                                            int x,
+                                            int y,
+                                            int leftCut,
+                                            int topCut,
+                                            int rightCut,
+                                            int bottomCut,
+                                            double xScale,
+                                            double yScale) {
+        int scaledWidth = (int) Math.round((appendedImg.getWidth() - leftCut - rightCut) * xScale);
+        int scaledHeight = (int) Math.round((appendedImg.getHeight() - topCut - bottomCut) * yScale);
+
+        BufferedImage resized = new BufferedImage(scaledWidth, scaledHeight, appendedImg.getType());
+        Graphics2D scaledAppender = resized.createGraphics();
+        scaledAppender.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+//        scaledAppender.drawImage(appendedImg, 0, 0, scaledWidth, scaledHeight, Color.CYAN, null);
+        Point point = new Point(scaledWidth, scaledHeight);
+        scaledAppender.drawImage(appendedImg,
+                0,
+                0,
+                scaledWidth,
+                scaledHeight,
+                0 + leftCut,
+                0 + topCut,
+                appendedImg.getWidth() - rightCut,
+                appendedImg.getHeight() - bottomCut,
+                Color.CYAN,
+                null);
+
+        //For debugging                     ............................//
+        scaledAppender.setStroke(new BasicStroke(1));             //
+        scaledAppender.drawRect(0, 0, scaledWidth, scaledHeight); //
+        //                                  ............................//
+
+        scaledAppender.dispose();
+
+        Graphics2D g2 = originalImg.createGraphics();
+        Color oldColor = g2.getColor();
+        g2.setPaint(Color.BLACK);
+        g2.setColor(oldColor);
+        g2.drawImage(resized, null, x, y);
+        g2.dispose();
+
+        return point;
     }
 
     public int getZoom() {
@@ -57,43 +106,43 @@ public class TileProcessor {
         return zoomLevel;
     }
 
-    public static void appendBufferedImage(BufferedImage originalImg,
-                                           BufferedImage appendedImg,
-                                           int x,
-                                           int y,
-                                           double xScale,
-                                           double yScale) {
-        int scaledWidth = (int) Math.round(appendedImg.getWidth() * xScale);
-        int scaledHeight = (int) Math.round(appendedImg.getHeight() * yScale);
-
-        BufferedImage resized = new BufferedImage(scaledWidth, scaledHeight, appendedImg.getType());
-        Graphics2D scaledAppender = resized.createGraphics();
-        scaledAppender.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        scaledAppender.drawImage(appendedImg, 0, 0, scaledWidth, scaledHeight, Color.CYAN, null);
-
-        //For debugging                     ............................//
-        scaledAppender.setStroke(new BasicStroke(1));             //
-        scaledAppender.drawRect(0, 0, scaledWidth, scaledHeight); //
-        //                                  ............................//
-
-        scaledAppender.dispose();
-
-        Graphics2D g2 = originalImg.createGraphics();
-        Color oldColor = g2.getColor();
-        g2.setPaint(Color.BLACK);
-        g2.setColor(oldColor);
-        g2.drawImage(resized, null, x, y);
-        g2.dispose();
-    }
-
     public BufferedImage getMap() {
         int zoom = getZoom();
         TileGrid tileGrid = TileBoundingBoxUtils.getTileGridWGS84(mapRequest.getBbox(), zoom);
-        double targetHeight = mapRequest.getHeight() / (tileGrid.getMaxY() - tileGrid.getMinY() + 1);
-        double targetWidth = mapRequest.getWidth() / (tileGrid.getMaxX() - tileGrid.getMinX() + 1);
 
-        TileMatrix tileMatrix= tileDaoProvider.getTileDaos().get(0).getTileMatrix(zoom);
+        TileMatrix tileMatrix = tileDaoProvider.getTileDaos().get(0).getTileMatrix(zoom);
+        //Get Lat lon for tileGrid to see if we need to cut any off.
+        BoundingBox tileGridLatLon = TileBoundingBoxUtils.getWGS84BoundingBox(tileGrid, zoom);
+//        tileGridLatLon.setMinLatitude((tileGrid.getMinY() * latPerTile) - ProjectionConstants.WGS84_HALF_WORLD_LAT_HEIGHT); //Utility gets this wrong
+//        tileGridLatLon.setMaxLatitude(((tileGrid.getMaxY() * latPerTile) + latPerTile) - ProjectionConstants.WGS84_HALF_WORLD_LAT_HEIGHT); //Utility gets this wrong
+//        if (tileGridLatLon.getMaxLatitude() < mapRequest.getBbox().getMaxLatitude()) {
+//            tileGrid.setMaxY(tileGrid.getMaxY() + 1);
+//            tileGridLatLon.setMaxLatitude(tileGridLatLon.getMaxLatitude() + latPerTile);
+//        }
+        double leftChopPercent = 0;
+        double rightChopPercent = 0;
+        double topChopPercent = 0;
+        double bottomChopPercent = 0;
+        if ((tileGridLatLon.getMinLatitude() < mapRequest.getBbox().getMinLatitude())
+                || (tileGridLatLon.getMaxLatitude() > mapRequest.getBbox().getMaxLatitude())) {
+            double deltaTopLat = tileGridLatLon.getMaxLatitude() - mapRequest.getBbox().getMaxLatitude();
+            double deltaBottomLat = mapRequest.getBbox().getMinLatitude() - tileGridLatLon.getMinLatitude();
+            double latPerTile = TileBoundingBoxUtils.tileSizeLatPerWGS84Side((int) tileMatrix.getMatrixHeight());
+            topChopPercent = deltaTopLat / latPerTile;
+            bottomChopPercent = deltaBottomLat / latPerTile;
+        }
+        if ((tileGridLatLon.getMinLongitude() < mapRequest.getBbox().getMinLongitude())
+                || (tileGridLatLon.getMaxLongitude() > mapRequest.getBbox().getMaxLongitude())) {
+            double lonPerTile = TileBoundingBoxUtils.tileSizeLonPerWGS84Side((int) tileMatrix.getMatrixWidth());
+            double deltaLeftLon = mapRequest.getBbox().getMinLongitude() - tileGridLatLon.getMinLongitude();
+            double deltaRightLon = tileGridLatLon.getMaxLongitude() - mapRequest.getBbox().getMaxLongitude();
+            leftChopPercent = deltaLeftLon / lonPerTile;
+            rightChopPercent = deltaRightLon / lonPerTile;
+        }
+        long displayRows = (tileGrid.getMaxY() - tileGrid.getMinY() + 1);
+        long displayColumns = (tileGrid.getMaxX() - tileGrid.getMinX() + 1);
+        double targetHeight = mapRequest.getHeight() / ((double) displayRows - topChopPercent - bottomChopPercent);
+        double targetWidth = mapRequest.getWidth() / ((double) displayColumns - leftChopPercent - rightChopPercent);
         int tileWidth = (int) tileMatrix.getTileWidth();
         int tileHeight = (int) tileMatrix.getTileHeight();
 
@@ -101,24 +150,44 @@ public class TileProcessor {
 
         int xPlace = 0;
         int yPlace = 0;
+        int lastX = xPlace;
+        int lastY = yPlace;
+        int lastXtracker = xPlace;
+        int lastYtracker = yPlace;
         for (long row = tileGrid.getMinY(); row <= tileGrid.getMaxY(); row++) {
             for (long col = tileGrid.getMinX(); col <= tileGrid.getMaxX(); col++) {
                 try {
                     TileRow tileRow = tileDaoProvider.getTileDaos().get(0).queryForTile(col, row, zoom);
                     if (tileRow != null) {
-                        appendBufferedImage(fullBufferedImage,
+                        int leftCut = (int) (tileRow.getTileDataImage().getWidth() * leftChopPercent);
+                        int rightCut = (int) (tileRow.getTileDataImage().getWidth() * rightChopPercent);
+                        int topCut = (int) (tileRow.getTileDataImage().getHeight() * topChopPercent);
+                        int bottomCut = (int) (tileRow.getTileDataImage().getHeight() * bottomChopPercent);
+                        Point point = appendBufferedImage(fullBufferedImage,
                                 tileRow.getTileDataImage(),
-                                (int) Math.floor(xPlace * targetWidth),
-                                (int) Math.floor(yPlace * targetHeight),
+                                lastX,
+                                lastY,
+                                xPlace == 0 ? leftCut : 0,
+                                yPlace == 0 ? topCut : 0,
+                                col == tileGrid.getMaxX() ? rightCut : 0,
+                                row == tileGrid.getMaxY() ? bottomCut : 0,
                                 targetWidth / tileWidth,
                                 targetHeight / tileHeight);
+                        lastXtracker = (int) (lastX + point.getX());
+                        lastYtracker = (int) (lastY + point.getY());
+                    } else {
+                        lastXtracker = (int) (lastX + targetWidth);
+                        lastYtracker = (int) (lastY + targetHeight);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                lastX = lastXtracker;
                 xPlace++;
             }
             xPlace = 0;
+            lastX = 0;
+            lastY = lastYtracker;
             yPlace++;
         }
         return fullBufferedImage;
