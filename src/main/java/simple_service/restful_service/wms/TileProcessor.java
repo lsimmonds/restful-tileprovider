@@ -112,8 +112,6 @@ public class TileProcessor {
 
         BufferedImage fullBufferedImage = new BufferedImage(mapRequest.getWidth(), mapRequest.getHeight(), BufferedImage.TYPE_INT_RGB);
 
-        //TODO: This is the point where we throw away all other levels and daos and just process the top layer
-        //TODO: enhance processing to allow for many Daos
         for (TileDao tileDao : tileDaoProvider.getTileDaos()) {
             int zoom = getZoom(tileDao);
             TileGrid tileGrid = TileBoundingBoxUtils.getTileGridWGS84(mapRequest.getBbox(), zoom);
