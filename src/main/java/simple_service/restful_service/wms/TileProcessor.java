@@ -74,10 +74,7 @@ public class TileProcessor {
         return point;
     }
 
-    public int getZoom() {
-        //TODO: This is the point where we throw away all other levels and daos and just process the top layer
-        //TODO: enhance processing to allow for many Daos
-        TileDao tileDao = tileDaoProvider.getTileDaos().get(0);
+    public int getZoom(TileDao tileDao) {
         double maxLon = tileDao.getTileMatrixSet().getMaxX();
         double minLon = tileDao.getTileMatrixSet().getMinX();
         double maxLat = tileDao.getTileMatrixSet().getMaxY();
@@ -112,83 +109,88 @@ public class TileProcessor {
     }
 
     public BufferedImage getMap() {
-        int zoom = getZoom();
-        TileGrid tileGrid = TileBoundingBoxUtils.getTileGridWGS84(mapRequest.getBbox(), zoom);
-
-        TileMatrix tileMatrix = tileDaoProvider.getTileDaos().get(0).getTileMatrix(zoom);
-        //Get Lat lon for tileGrid to see if we need to cut any off.
-        BoundingBox tileGridLatLon = TileBoundingBoxUtils.getWGS84BoundingBox(tileGrid, zoom);
-
-        double leftChopPercent = 0;
-        double rightChopPercent = 0;
-        double topChopPercent = 0;
-        double bottomChopPercent = 0;
-        if ((tileGridLatLon.getMinLatitude() < mapRequest.getBbox().getMinLatitude())
-                || (tileGridLatLon.getMaxLatitude() > mapRequest.getBbox().getMaxLatitude())) {
-            double deltaTopLat = tileGridLatLon.getMaxLatitude() - mapRequest.getBbox().getMaxLatitude();
-            double deltaBottomLat = mapRequest.getBbox().getMinLatitude() - tileGridLatLon.getMinLatitude();
-            double latPerTile = TileBoundingBoxUtils.tileSizeLatPerWGS84Side((int) tileMatrix.getMatrixHeight());
-            topChopPercent = deltaTopLat / latPerTile;
-            bottomChopPercent = deltaBottomLat / latPerTile;
-        }
-        if ((tileGridLatLon.getMinLongitude() < mapRequest.getBbox().getMinLongitude())
-                || (tileGridLatLon.getMaxLongitude() > mapRequest.getBbox().getMaxLongitude())) {
-            double lonPerTile = TileBoundingBoxUtils.tileSizeLonPerWGS84Side((int) tileMatrix.getMatrixWidth());
-            double deltaLeftLon = mapRequest.getBbox().getMinLongitude() - tileGridLatLon.getMinLongitude();
-            double deltaRightLon = tileGridLatLon.getMaxLongitude() - mapRequest.getBbox().getMaxLongitude();
-            leftChopPercent = deltaLeftLon / lonPerTile;
-            rightChopPercent = deltaRightLon / lonPerTile;
-        }
-        long displayRows = (tileGrid.getMaxY() - tileGrid.getMinY() + 1);
-        long displayColumns = (tileGrid.getMaxX() - tileGrid.getMinX() + 1);
-        double targetHeight = mapRequest.getHeight() / ((double) displayRows - topChopPercent - bottomChopPercent);
-        double targetWidth = mapRequest.getWidth() / ((double) displayColumns - leftChopPercent - rightChopPercent);
-        int tileWidth = (int) tileMatrix.getTileWidth();
-        int tileHeight = (int) tileMatrix.getTileHeight();
 
         BufferedImage fullBufferedImage = new BufferedImage(mapRequest.getWidth(), mapRequest.getHeight(), BufferedImage.TYPE_INT_RGB);
 
-        int xPlace = 0;
-        int yPlace = 0;
-        int lastX = xPlace;
-        int lastY = yPlace;
-        int lastXtracker = xPlace;
-        int lastYtracker = yPlace;
-        for (long row = tileGrid.getMinY(); row <= tileGrid.getMaxY(); row++) {
-            for (long col = tileGrid.getMinX(); col <= tileGrid.getMaxX(); col++) {
-                try {
-                    TileRow tileRow = tileDaoProvider.getTileDaos().get(0).queryForTile(col, row, zoom);
-                    if (tileRow != null) {
-                        int leftCut = (int) (tileRow.getTileDataImage().getWidth() * leftChopPercent);
-                        int rightCut = (int) (tileRow.getTileDataImage().getWidth() * rightChopPercent);
-                        int topCut = (int) (tileRow.getTileDataImage().getHeight() * topChopPercent);
-                        int bottomCut = (int) (tileRow.getTileDataImage().getHeight() * bottomChopPercent);
-                        Point point = appendBufferedImage(fullBufferedImage,
-                                tileRow.getTileDataImage(),
-                                lastX,
-                                lastY,
-                                xPlace == 0 ? leftCut : 0,
-                                yPlace == 0 ? topCut : 0,
-                                col == tileGrid.getMaxX() ? rightCut : 0,
-                                row == tileGrid.getMaxY() ? bottomCut : 0,
-                                targetWidth / tileWidth,
-                                targetHeight / tileHeight);
-                        lastXtracker = (int) (lastX + point.getX());
-                        lastYtracker = (int) (lastY + point.getY());
-                    } else {
-                        lastXtracker = (int) (lastX + targetWidth);
-                        lastYtracker = (int) (lastY + targetHeight);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                lastX = lastXtracker;
-                xPlace++;
+        //TODO: This is the point where we throw away all other levels and daos and just process the top layer
+        //TODO: enhance processing to allow for many Daos
+        for (TileDao tileDao : tileDaoProvider.getTileDaos()) {
+            int zoom = getZoom(tileDao);
+            TileGrid tileGrid = TileBoundingBoxUtils.getTileGridWGS84(mapRequest.getBbox(), zoom);
+
+            TileMatrix tileMatrix = tileDao.getTileMatrix(zoom);
+            //Get Lat lon for tileGrid to see if we need to cut any off.
+            BoundingBox tileGridLatLon = TileBoundingBoxUtils.getWGS84BoundingBox(tileGrid, zoom);
+
+            double leftChopPercent = 0;
+            double rightChopPercent = 0;
+            double topChopPercent = 0;
+            double bottomChopPercent = 0;
+            if ((tileGridLatLon.getMinLatitude() < mapRequest.getBbox().getMinLatitude())
+                    || (tileGridLatLon.getMaxLatitude() > mapRequest.getBbox().getMaxLatitude())) {
+                double deltaTopLat = tileGridLatLon.getMaxLatitude() - mapRequest.getBbox().getMaxLatitude();
+                double deltaBottomLat = mapRequest.getBbox().getMinLatitude() - tileGridLatLon.getMinLatitude();
+                double latPerTile = TileBoundingBoxUtils.tileSizeLatPerWGS84Side((int) tileMatrix.getMatrixHeight());
+                topChopPercent = deltaTopLat / latPerTile;
+                bottomChopPercent = deltaBottomLat / latPerTile;
             }
-            xPlace = 0;
-            lastX = 0;
-            lastY = lastYtracker;
-            yPlace++;
+            if ((tileGridLatLon.getMinLongitude() < mapRequest.getBbox().getMinLongitude())
+                    || (tileGridLatLon.getMaxLongitude() > mapRequest.getBbox().getMaxLongitude())) {
+                double lonPerTile = TileBoundingBoxUtils.tileSizeLonPerWGS84Side((int) tileMatrix.getMatrixWidth());
+                double deltaLeftLon = mapRequest.getBbox().getMinLongitude() - tileGridLatLon.getMinLongitude();
+                double deltaRightLon = tileGridLatLon.getMaxLongitude() - mapRequest.getBbox().getMaxLongitude();
+                leftChopPercent = deltaLeftLon / lonPerTile;
+                rightChopPercent = deltaRightLon / lonPerTile;
+            }
+            long displayRows = (tileGrid.getMaxY() - tileGrid.getMinY() + 1);
+            long displayColumns = (tileGrid.getMaxX() - tileGrid.getMinX() + 1);
+            double targetHeight = mapRequest.getHeight() / ((double) displayRows - topChopPercent - bottomChopPercent);
+            double targetWidth = mapRequest.getWidth() / ((double) displayColumns - leftChopPercent - rightChopPercent);
+            int tileWidth = (int) tileMatrix.getTileWidth();
+            int tileHeight = (int) tileMatrix.getTileHeight();
+
+            int xPlace = 0;
+            int yPlace = 0;
+            int lastX = xPlace;
+            int lastY = yPlace;
+            int lastXtracker = xPlace;
+            int lastYtracker = yPlace;
+            for (long row = tileGrid.getMinY(); row <= tileGrid.getMaxY(); row++) {
+                for (long col = tileGrid.getMinX(); col <= tileGrid.getMaxX(); col++) {
+                    try {
+                        TileRow tileRow = tileDao.queryForTile(col, row, zoom);
+                        if (tileRow != null) {
+                            int leftCut = (int) (tileRow.getTileDataImage().getWidth() * leftChopPercent);
+                            int rightCut = (int) (tileRow.getTileDataImage().getWidth() * rightChopPercent);
+                            int topCut = (int) (tileRow.getTileDataImage().getHeight() * topChopPercent);
+                            int bottomCut = (int) (tileRow.getTileDataImage().getHeight() * bottomChopPercent);
+                            Point point = appendBufferedImage(fullBufferedImage,
+                                    tileRow.getTileDataImage(),
+                                    lastX,
+                                    lastY,
+                                    xPlace == 0 ? leftCut : 0,
+                                    yPlace == 0 ? topCut : 0,
+                                    col == tileGrid.getMaxX() ? rightCut : 0,
+                                    row == tileGrid.getMaxY() ? bottomCut : 0,
+                                    targetWidth / tileWidth,
+                                    targetHeight / tileHeight);
+                            lastXtracker = (int) (lastX + point.getX());
+                            lastYtracker = (int) (lastY + point.getY());
+                        } else {
+                            lastXtracker = (int) (lastX + targetWidth);
+                            lastYtracker = (int) (lastY + targetHeight);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    lastX = lastXtracker;
+                    xPlace++;
+                }
+                xPlace = 0;
+                lastX = 0;
+                lastY = lastYtracker;
+                yPlace++;
+            }
         }
         return fullBufferedImage;
     }
