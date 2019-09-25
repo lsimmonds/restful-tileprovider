@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6ce67d73-f435-4159-97ae-740c67ee15cc" name="Default Changelist" comment="">
+    <list default="true" id="6ce67d73-f435-4159-97ae-740c67ee15cc" name="Default Changelist" comment="More clean up, add Debug config var">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java" afterDir="false" />
     </list>
@@ -129,7 +129,7 @@
       <workItem from="1562686295021" duration="152000" />
       <workItem from="1568144902862" duration="70000" />
       <workItem from="1568151021890" duration="31161000" />
-      <workItem from="1568304058897" duration="30561000" />
+      <workItem from="1568304058897" duration="40596000" />
     </task>
     <task id="LOCAL-00001" summary="Working prototype">
       <created>1568222836981</created>
@@ -159,7 +159,21 @@
       <option name="project" value="LOCAL" />
       <updated>1568410351587</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="More clean up, add Debug config var">
+      <created>1568927271273</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1568927271274</updated>
+    </task>
+    <task id="LOCAL-00006" summary="More clean up, add Debug config var">
+      <created>1568927301862</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1568927301862</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -198,6 +212,22 @@
     <MESSAGE value="Comment clean up" />
     <MESSAGE value="More clean up, add Debug config var" />
     <option name="LAST_COMMIT_MESSAGE" value="More clean up, add Debug config var" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="masterDetails">
     <states>

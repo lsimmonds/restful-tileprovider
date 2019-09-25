@@ -9,7 +9,8 @@ import mil.nga.geopackage.tiles.user.TileRow;
 import mil.nga.sf.Point;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.color.ColorSpace;
+import java.awt.image.*;
 import java.io.IOException;
 
 public class TileProcessor {
@@ -36,14 +37,30 @@ public class TileProcessor {
                                      int rightCut,
                                      int bottomCut,
                                      double xScale,
-                                     double yScale) {
+                                     double yScale,
+                                     int transCount) {
         int scaledWidth = (int) Math.round((appendedImg.getWidth() - leftCut - rightCut) * xScale);
         int scaledHeight = (int) Math.round((appendedImg.getHeight() - topCut - bottomCut) * yScale);
 
-        BufferedImage resized = new BufferedImage(scaledWidth, scaledHeight, appendedImg.getType());
+        int imgType = appendedImg.getType();
+        BufferedImage resized = null;
+        if (transCount > 0) {
+            ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
+            ColorModel colorModel = new ComponentColorModel(cs, true, false, Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
+
+            WritableRaster raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, scaledWidth, scaledHeight, 4, null);
+
+            resized = new BufferedImage(colorModel, raster, colorModel.isAlphaPremultiplied(), null);
+        } else {
+            resized = new BufferedImage(scaledWidth, scaledHeight, imgType);
+        }
         Graphics2D scaledAppender = resized.createGraphics();
         scaledAppender.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        if (transCount > 0) {
+            Composite translucent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+            scaledAppender.setComposite(translucent);
+        }
         Point point = new Point(scaledWidth, scaledHeight);
         scaledAppender.drawImage(appendedImg,
                 0,
@@ -112,6 +129,7 @@ public class TileProcessor {
 
         BufferedImage fullBufferedImage = new BufferedImage(mapRequest.getWidth(), mapRequest.getHeight(), BufferedImage.TYPE_INT_RGB);
 
+        int transCount = 0;
         for (TileDao tileDao : tileDaoProvider.getTileDaos()) {
             int zoom = getZoom(tileDao);
             TileGrid tileGrid = TileBoundingBoxUtils.getTileGridWGS84(mapRequest.getBbox(), zoom);
@@ -171,7 +189,8 @@ public class TileProcessor {
                                     col == tileGrid.getMaxX() ? rightCut : 0,
                                     row == tileGrid.getMaxY() ? bottomCut : 0,
                                     targetWidth / tileWidth,
-                                    targetHeight / tileHeight);
+                                    targetHeight / tileHeight,
+                                    transCount);
                             lastXtracker = (int) (lastX + point.getX());
                             lastYtracker = (int) (lastY + point.getY());
                         } else {
@@ -189,6 +208,7 @@ public class TileProcessor {
                 lastY = lastYtracker;
                 yPlace++;
             }
+            transCount++;
         }
         return fullBufferedImage;
     }
