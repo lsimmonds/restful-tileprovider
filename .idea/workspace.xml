@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6ce67d73-f435-4159-97ae-740c67ee15cc" name="Default Changelist" comment="More clean up, add Debug config var">
+    <list default="true" id="6ce67d73-f435-4159-97ae-740c67ee15cc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/GeoServerRequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/GeoServerRequestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bootstrap.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +45,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/simple_service/restful_service" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -86,12 +89,17 @@
       </method>
     </configuration>
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="gs-rest-service" />
+      <module name="tileprovider-rest-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="simple_service.restful_service.Application" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.AppTest" />
+      <item itemvalue="Spring Boot.Application" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.AppTest" />
@@ -129,7 +137,8 @@
       <workItem from="1562686295021" duration="152000" />
       <workItem from="1568144902862" duration="70000" />
       <workItem from="1568151021890" duration="31161000" />
-      <workItem from="1568304058897" duration="40596000" />
+      <workItem from="1568304058897" duration="40682000" />
+      <workItem from="1569432086822" duration="3157000" />
     </task>
     <task id="LOCAL-00001" summary="Working prototype">
       <created>1568222836981</created>
@@ -173,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568927301862</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add transparency for secondary layers">
+      <created>1569428063543</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1569428063543</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -211,19 +227,20 @@
     <MESSAGE value="Working prototype" />
     <MESSAGE value="Comment clean up" />
     <MESSAGE value="More clean up, add Debug config var" />
-    <option name="LAST_COMMIT_MESSAGE" value="More clean up, add Debug config var" />
+    <MESSAGE value="Add transparency for secondary layers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add transparency for secondary layers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java</url>
-          <line>47</line>
+          <line>54</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java</url>
-          <line>60</line>
+          <line>67</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>

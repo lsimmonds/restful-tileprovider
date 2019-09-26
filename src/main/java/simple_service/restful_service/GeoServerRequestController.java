@@ -22,7 +22,8 @@ public class GeoServerRequestController {
     public byte[] simpleResponse(@RequestParam Map<String, String> queryParameters) {
         GetMapRequest mapRequest = new GetMapRequest(queryParameters, env.getProperty("geopackage.rootPath"));
         boolean debug = env.getProperty("debug", Boolean.class) == null ? false : env.getProperty("debug", Boolean.class);
-        TileProcessor tileProcessor = new TileProcessor(mapRequest, debug);
+        boolean transparent = env.getProperty("transparent", Boolean.class) == null ? false : env.getProperty("transparent", Boolean.class);
+        TileProcessor tileProcessor = new TileProcessor(mapRequest, debug, transparent);
 
         try {
             return new GetMapResponse(tileProcessor.getMap()).getBody().readAllBytes();

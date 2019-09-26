@@ -17,6 +17,7 @@ public class TileProcessor {
     private TileDaoProvider tileDaoProvider;
     private GetMapRequest mapRequest;
     private boolean debug = false;
+    private boolean transparent = false;
 
     public TileProcessor(GetMapRequest mapRequest) {
         this.mapRequest = mapRequest;
@@ -26,6 +27,12 @@ public class TileProcessor {
     public TileProcessor(GetMapRequest mapRequest, boolean debug) {
         this(mapRequest);
         this.debug = debug;
+    }
+
+    public TileProcessor(GetMapRequest mapRequest, boolean debug, boolean transparent) {
+        this(mapRequest);
+        this.debug = debug;
+        this.transparent = transparent;
     }
 
     public Point appendBufferedImage(BufferedImage originalImg,
@@ -44,7 +51,7 @@ public class TileProcessor {
 
         int imgType = appendedImg.getType();
         BufferedImage resized = null;
-        if (transCount > 0) {
+        if (this.transparent && transCount > 0) {
             ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
             ColorModel colorModel = new ComponentColorModel(cs, true, false, Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
 
@@ -57,7 +64,7 @@ public class TileProcessor {
         Graphics2D scaledAppender = resized.createGraphics();
         scaledAppender.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        if (transCount > 0) {
+        if (this.transparent && transCount > 0) {
             Composite translucent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
             scaledAppender.setComposite(translucent);
         }
@@ -169,8 +176,8 @@ public class TileProcessor {
             int yPlace = 0;
             int lastX = xPlace;
             int lastY = yPlace;
-            int lastXtracker = xPlace;
-            int lastYtracker = yPlace;
+            int lastXTracker = xPlace;
+            int lastYTracker = yPlace;
             for (long row = tileGrid.getMinY(); row <= tileGrid.getMaxY(); row++) {
                 for (long col = tileGrid.getMinX(); col <= tileGrid.getMaxX(); col++) {
                     try {
@@ -191,21 +198,21 @@ public class TileProcessor {
                                     targetWidth / tileWidth,
                                     targetHeight / tileHeight,
                                     transCount);
-                            lastXtracker = (int) (lastX + point.getX());
-                            lastYtracker = (int) (lastY + point.getY());
+                            lastXTracker = (int) (lastX + point.getX());
+                            lastYTracker = (int) (lastY + point.getY());
                         } else {
-                            lastXtracker = (int) (lastX + targetWidth);
-                            lastYtracker = (int) (lastY + targetHeight);
+                            lastXTracker = (int) (lastX + targetWidth);
+                            lastYTracker = (int) (lastY + targetHeight);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    lastX = lastXtracker;
+                    lastX = lastXTracker;
                     xPlace++;
                 }
                 xPlace = 0;
                 lastX = 0;
-                lastY = lastYtracker;
+                lastY = lastYTracker;
                 yPlace++;
             }
             transCount++;

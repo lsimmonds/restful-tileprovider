@@ -6,8 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="gs-rest-service" />
         <module name="restful-service" />
+        <module name="gs-rest-service" />
+        <module name="tileprovider-rest-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -15,6 +16,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="gs-rest-service" options="-parameters" />
       <module name="restful-service" options="-parameters" />
+      <module name="tileprovider-rest-service" options="-parameters" />
     </option>
   </component>
 </project>
