@@ -14,8 +14,8 @@ import java.io.InputStream;
 
 public class GetMapResponse implements ClientHttpResponse {
 
-    private HttpStatus status;
-    private BufferedImage mapImage;
+    protected HttpStatus status;
+    protected BufferedImage mapImage;
 
     public GetMapResponse(HttpStatus status, BufferedImage image) {
         this.status = status;
@@ -25,6 +25,11 @@ public class GetMapResponse implements ClientHttpResponse {
     public GetMapResponse(BufferedImage image) {
         status = HttpStatus.OK;
         mapImage = image;
+    }
+
+    public GetMapResponse() {
+        status = HttpStatus.OK;
+        mapImage = null;
     }
 
     @Override
@@ -67,5 +72,9 @@ public class GetMapResponse implements ClientHttpResponse {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
         return headers;
+    }
+
+    protected GetMapResponse makeGetMapResponse(HttpStatus status, BufferedImage image) {
+        return new GetMapResponse(status, image);
     }
 }

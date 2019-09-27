@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ce67d73-f435-4159-97ae-740c67ee15cc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/simple_service/restful_service/wms/GetMapResponseTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/GeoServerRequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/GeoServerRequestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/GetMapResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/GetMapResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bootstrap.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,6 +21,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="TestNG Test Class" />
       </list>
     </option>
   </component>
@@ -45,6 +46,8 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="TestNG" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.TestNG" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -55,6 +58,12 @@
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="simple_service.restful_service.wms" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\lsimmonds.CC011\restful-tileprovider\src\main\java\simple_service\restful_service" />
       <recent name="C:\Users\lsimmonds.CC011\eclipse-workspace\simple-service\restful-service\src\main\resources" />
@@ -72,7 +81,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.Application">
+  <component name="RunManager" selected="TestNG.GetMapResponseTest">
     <configuration name="AppTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="gs-rest-service" />
       <extension name="coverage">
@@ -96,12 +105,71 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GetMapResponseTest" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="tileprovider-rest-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="simple_service.restful_service.wms.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="simple_service.restful_service.wms" />
+      <option name="MAIN_CLASS_NAME" value="simple_service.restful_service.wms.GetMapResponseTest" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GetMapResponseTest.testGetBody" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="tileprovider-rest-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="simple_service.restful_service.wms.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="simple_service.restful_service.wms" />
+      <option name="MAIN_CLASS_NAME" value="simple_service.restful_service.wms.GetMapResponseTest" />
+      <option name="METHOD_NAME" value="testGetBody" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GetMapResponseTest.testGetHeaders" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="tileprovider-rest-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="simple_service.restful_service.wms.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="simple_service.restful_service.wms" />
+      <option name="MAIN_CLASS_NAME" value="simple_service.restful_service.wms.GetMapResponseTest" />
+      <option name="METHOD_NAME" value="testGetHeaders" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="JUnit.AppTest" />
       <item itemvalue="Spring Boot.Application" />
+      <item itemvalue="TestNG.GetMapResponseTest.testGetBody" />
+      <item itemvalue="TestNG.GetMapResponseTest.testGetHeaders" />
+      <item itemvalue="TestNG.GetMapResponseTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="TestNG.GetMapResponseTest" />
+        <item itemvalue="TestNG.GetMapResponseTest.testGetHeaders" />
+        <item itemvalue="TestNG.GetMapResponseTest.testGetBody" />
         <item itemvalue="JUnit.AppTest" />
       </list>
     </recent_temporary>
@@ -139,6 +207,7 @@
       <workItem from="1568151021890" duration="31161000" />
       <workItem from="1568304058897" duration="40682000" />
       <workItem from="1569432086822" duration="3157000" />
+      <workItem from="1569610999386" duration="10562000" />
     </task>
     <task id="LOCAL-00001" summary="Working prototype">
       <created>1568222836981</created>
@@ -192,11 +261,6 @@
     <option name="localTasksCounter" value="8" />
     <servers />
   </component>
-  <component name="TestHistory">
-    <history-entry file="AppTest - 2019.06.19 at 16h 46m 22s.xml">
-      <configuration name="AppTest" configurationId="JUnit" />
-    </history-entry>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
@@ -242,6 +306,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java</url>
           <line>67</line>
           <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/simple_service/restful_service/wms/GetMapResponseTest.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
