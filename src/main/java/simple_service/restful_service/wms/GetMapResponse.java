@@ -74,7 +74,4 @@ public class GetMapResponse implements ClientHttpResponse {
         return headers;
     }
 
-    protected GetMapResponse makeGetMapResponse(HttpStatus status, BufferedImage image) {
-        return new GetMapResponse(status, image);
-    }
 }

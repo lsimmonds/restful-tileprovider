@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TileDaoProvider {
+    protected List<GeoPackage> geoPackages = new ArrayList<>();
     private GetMapRequest mapRequest;
     private List<TileDao> tileDaos = new ArrayList<>();
-    private List<GeoPackage> geoPackages = new ArrayList<>();
+
+    public TileDaoProvider() {
+    }
 
     public TileDaoProvider(GetMapRequest mapRequest) {
         this.mapRequest = mapRequest;
@@ -23,13 +26,27 @@ public class TileDaoProvider {
         for (String layer : layers) {
             //Change ":" to "-"
             String fileName = layer.replace(":", "-") + ".gpkg";
-            File newFile = new File(rootGPPath, fileName);
+            File newFile = getFile(rootGPPath, fileName);
             GeoPackage geoPackage;
             if (newFile.exists()) {
-                geoPackage = GeoPackageManager.open(newFile);
+                geoPackage = getGeoPackage(newFile);
                 geoPackages.add(geoPackage);
             }
         }
+    }
+
+    public GeoPackage getGeoPackage(File newFile) {
+        GeoPackage geoPackage;
+        geoPackage = GeoPackageManager.open(newFile);
+        return geoPackage;
+    }
+
+    public void setMapRequest(GetMapRequest mapRequest) {
+        this.mapRequest = mapRequest;
+    }
+
+    protected File getFile(String rootGPPath, String fileName) {
+        return new File(rootGPPath, fileName);
     }
 
     public List<TileDao> getTileDaos() {

@@ -1,10 +1,8 @@
 package simple_service.restful_service.wms;
 
-import org.locationtech.jts.util.Assert;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -48,7 +46,7 @@ public class GetMapResponseTest {
         }
 
         //It returns an InputStream
-        org.testng.Assert.assertEquals(mockGetMapResponse.getBody().readAllBytes(),(new ByteArrayInputStream(imageInByte)).readAllBytes());
+        org.testng.Assert.assertEquals(mockGetMapResponse.getBody().readAllBytes(), (new ByteArrayInputStream(imageInByte)).readAllBytes());
     }
 
     @Test
