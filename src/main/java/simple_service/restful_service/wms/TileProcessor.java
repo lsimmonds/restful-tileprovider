@@ -14,10 +14,17 @@ import java.awt.image.*;
 import java.io.IOException;
 
 public class TileProcessor {
-    private TileDaoProvider tileDaoProvider;
-    private GetMapRequest mapRequest;
-    private boolean debug = false;
-    private boolean transparent = false;
+    protected TileDaoProvider tileDaoProvider;
+    protected GetMapRequest mapRequest;
+    protected boolean debug = false;
+    protected boolean transparent = false;
+
+    public TileProcessor() {
+        this.mapRequest = null;
+        tileDaoProvider = null;
+        this.debug = false;
+        this.transparent = false;
+    }
 
     public TileProcessor(GetMapRequest mapRequest) {
         this.mapRequest = mapRequest;
@@ -46,29 +53,19 @@ public class TileProcessor {
                                      double xScale,
                                      double yScale,
                                      int transCount) {
-        int scaledWidth = (int) Math.round((appendedImg.getWidth() - leftCut - rightCut) * xScale);
-        int scaledHeight = (int) Math.round((appendedImg.getHeight() - topCut - bottomCut) * yScale);
+        int scaledWidth = getScaledWidth(appendedImg, leftCut, rightCut, xScale);
+        int scaledHeight = getScaledHeight(appendedImg, topCut, bottomCut, yScale);
 
         int imgType = appendedImg.getType();
-        BufferedImage resized = null;
-        if (this.transparent && transCount > 0) {
-            ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
-            ColorModel colorModel = new ComponentColorModel(cs, true, false, Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
-
-            WritableRaster raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, scaledWidth, scaledHeight, 4, null);
-
-            resized = new BufferedImage(colorModel, raster, colorModel.isAlphaPremultiplied(), null);
-        } else {
-            resized = new BufferedImage(scaledWidth, scaledHeight, imgType);
-        }
+        BufferedImage resized = getBufferedImage(transCount, scaledWidth, scaledHeight, imgType);
         Graphics2D scaledAppender = resized.createGraphics();
         scaledAppender.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         if (this.transparent && transCount > 0) {
-            Composite translucent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+            Composite translucent = getComposite();
             scaledAppender.setComposite(translucent);
         }
-        Point point = new Point(scaledWidth, scaledHeight);
+        Point point = getPoint(scaledWidth, scaledHeight);
         scaledAppender.drawImage(appendedImg,
                 0,
                 0,
@@ -82,8 +79,7 @@ public class TileProcessor {
                 null);
 
         if (this.debug) {
-            scaledAppender.setStroke(new BasicStroke(1));
-            scaledAppender.drawRect(0, 0, scaledWidth, scaledHeight);
+            drawBoundary(scaledWidth, scaledHeight, scaledAppender);
         }
 
         scaledAppender.dispose();
@@ -105,7 +101,7 @@ public class TileProcessor {
         double minLat = tileDao.getTileMatrixSet().getMinY();
         double layerLonTotal = maxLon - minLon;
         double layerLatTotal = maxLat - minLat;
-        BoundingBox bbox = mapRequest.getBbox();
+        BoundingBox bbox = getMapRequest().getBbox();
         BoundingBox effectiveBox = new BoundingBox();
         effectiveBox.setMinLongitude(Math.max(bbox.getMinLongitude(), minLon));
         effectiveBox.setMinLatitude(Math.max(bbox.getMinLatitude(), minLat));
@@ -134,16 +130,16 @@ public class TileProcessor {
 
     public BufferedImage getMap() {
 
-        BufferedImage fullBufferedImage = new BufferedImage(mapRequest.getWidth(), mapRequest.getHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage fullBufferedImage = getMapImage();
 
         int transCount = 0;
         for (TileDao tileDao : tileDaoProvider.getTileDaos()) {
             int zoom = getZoom(tileDao);
-            TileGrid tileGrid = TileBoundingBoxUtils.getTileGridWGS84(mapRequest.getBbox(), zoom);
+            TileGrid tileGrid = getTileGrid(zoom);
 
             TileMatrix tileMatrix = tileDao.getTileMatrix(zoom);
             //Get Lat lon for tileGrid to see if we need to cut any off.
-            BoundingBox tileGridLatLon = TileBoundingBoxUtils.getWGS84BoundingBox(tileGrid, zoom);
+            BoundingBox tileGridLatLon = getBoundingBox(zoom, tileGrid);
 
             double leftChopPercent = 0;
             double rightChopPercent = 0;
@@ -153,13 +149,13 @@ public class TileProcessor {
                     || (tileGridLatLon.getMaxLatitude() > mapRequest.getBbox().getMaxLatitude())) {
                 double deltaTopLat = tileGridLatLon.getMaxLatitude() - mapRequest.getBbox().getMaxLatitude();
                 double deltaBottomLat = mapRequest.getBbox().getMinLatitude() - tileGridLatLon.getMinLatitude();
-                double latPerTile = TileBoundingBoxUtils.tileSizeLatPerWGS84Side((int) tileMatrix.getMatrixHeight());
+                double latPerTile = getLatPerTile(tileMatrix);
                 topChopPercent = deltaTopLat / latPerTile;
                 bottomChopPercent = deltaBottomLat / latPerTile;
             }
             if ((tileGridLatLon.getMinLongitude() < mapRequest.getBbox().getMinLongitude())
                     || (tileGridLatLon.getMaxLongitude() > mapRequest.getBbox().getMaxLongitude())) {
-                double lonPerTile = TileBoundingBoxUtils.tileSizeLonPerWGS84Side((int) tileMatrix.getMatrixWidth());
+                double lonPerTile = getLonPerTile(tileMatrix);
                 double deltaLeftLon = mapRequest.getBbox().getMinLongitude() - tileGridLatLon.getMinLongitude();
                 double deltaRightLon = tileGridLatLon.getMaxLongitude() - mapRequest.getBbox().getMaxLongitude();
                 leftChopPercent = deltaLeftLon / lonPerTile;
@@ -218,5 +214,82 @@ public class TileProcessor {
             transCount++;
         }
         return fullBufferedImage;
+    }
+
+    protected double getLonPerTile(TileMatrix tileMatrix) {
+        return TileBoundingBoxUtils.tileSizeLonPerWGS84Side((int) tileMatrix.getMatrixWidth());
+    }
+
+    protected double getLatPerTile(TileMatrix tileMatrix) {
+        return TileBoundingBoxUtils.tileSizeLatPerWGS84Side((int) tileMatrix.getMatrixHeight());
+    }
+
+    protected BufferedImage getMapImage() {
+        return new BufferedImage(mapRequest.getWidth(), mapRequest.getHeight(), BufferedImage.TYPE_INT_RGB);
+    }
+
+    protected BoundingBox getBoundingBox(int zoom, TileGrid tileGrid) {
+        return TileBoundingBoxUtils.getWGS84BoundingBox(tileGrid, zoom);
+    }
+
+    protected TileGrid getTileGrid(int zoom) {
+        return TileBoundingBoxUtils.getTileGridWGS84(mapRequest.getBbox(), zoom);
+    }
+
+    public GetMapRequest getMapRequest() {
+        return mapRequest;
+    }
+
+    public void setMapRequest(GetMapRequest mapRequest) {
+        this.mapRequest = mapRequest;
+    }
+
+
+    protected void drawBoundary(int scaledWidth, int scaledHeight, Graphics2D scaledAppender) {
+        scaledAppender.setStroke(new BasicStroke(1));
+        scaledAppender.drawRect(0, 0, scaledWidth, scaledHeight);
+    }
+
+    protected Point getPoint(int scaledWidth, int scaledHeight) {
+        return new Point(scaledWidth, scaledHeight);
+    }
+
+    protected int getScaledHeight(BufferedImage appendedImg, int topCut, int bottomCut, double yScale) {
+        return (int) Math.round((appendedImg.getHeight() - topCut - bottomCut) * yScale);
+    }
+
+    protected int getScaledWidth(BufferedImage appendedImg, int leftCut, int rightCut, double xScale) {
+        return (int) Math.round((appendedImg.getWidth() - leftCut - rightCut) * xScale);
+    }
+
+    protected Composite getComposite() {
+        return AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+    }
+
+    protected BufferedImage getBufferedImage(int transCount, int scaledWidth, int scaledHeight, int imgType) {
+        BufferedImage resized = null;
+        if (this.transparent && transCount > 0) {
+            resized = getTransparentBufferedImage(scaledWidth, scaledHeight);
+        } else {
+            resized = getRegularBufferedImage(scaledWidth, scaledHeight, imgType);
+        }
+        return resized;
+    }
+
+    protected BufferedImage getRegularBufferedImage(int scaledWidth, int scaledHeight, int imgType) {
+        BufferedImage resized;
+        resized = new BufferedImage(scaledWidth, scaledHeight, imgType);
+        return resized;
+    }
+
+    protected BufferedImage getTransparentBufferedImage(int scaledWidth, int scaledHeight) {
+        BufferedImage resized;
+        ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
+        ColorModel colorModel = new ComponentColorModel(cs, true, false, Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
+
+        WritableRaster raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, scaledWidth, scaledHeight, 4, null);
+
+        resized = new BufferedImage(colorModel, raster, colorModel.isAlphaPremultiplied(), null);
+        return resized;
     }
 }

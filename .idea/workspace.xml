@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ce67d73-f435-4159-97ae-740c67ee15cc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/simple_service/restful_service/wms/TileDaoProviderTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/simple_service/restful_service/wms/TileProcessorTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/GetMapResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/GetMapResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileDaoProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileDaoProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/simple_service/restful_service/wms/GetMapResponseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/simple_service/restful_service/wms/GetMapResponseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +15,10 @@
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="OPEN_IN_BROWSER" value="true" />
+    <option name="OUTPUT_DIRECTORY" value="C:\Users\lsimmonds.CC011\Downloads" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -49,7 +52,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="TestNG" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.TestNG" value="" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Downloads" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -82,7 +85,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="TestNG.TileDaoProviderTest">
+  <component name="RunManager" selected="TestNG.simple_service.restful_service">
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="tileprovider-rest-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="simple_service.restful_service.Application" />
@@ -91,7 +94,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GetMapResponseTest" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="TileProcessorTest" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="tileprovider-rest-service" />
       <extension name="coverage">
         <pattern>
@@ -100,7 +103,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="simple_service.restful_service.wms" />
-      <option name="MAIN_CLASS_NAME" value="simple_service.restful_service.wms.GetMapResponseTest" />
+      <option name="MAIN_CLASS_NAME" value="simple_service.restful_service.wms.TileProcessorTest" />
       <option name="TEST_OBJECT" value="CLASS" />
       <properties />
       <listeners />
@@ -108,7 +111,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GetMapResponseTest.testGetHeaders" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="TileProcessorTest.testAppendBufferedImage4" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="tileprovider-rest-service" />
       <extension name="coverage">
         <pattern>
@@ -117,8 +120,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="simple_service.restful_service.wms" />
-      <option name="MAIN_CLASS_NAME" value="simple_service.restful_service.wms.GetMapResponseTest" />
-      <option name="METHOD_NAME" value="testGetHeaders" />
+      <option name="MAIN_CLASS_NAME" value="simple_service.restful_service.wms.TileProcessorTest" />
+      <option name="METHOD_NAME" value="testAppendBufferedImage4" />
       <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
@@ -126,7 +129,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TileDaoProviderTest" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="TileProcessorTest.testGetMap" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="tileprovider-rest-service" />
       <extension name="coverage">
         <pattern>
@@ -135,25 +138,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="simple_service.restful_service.wms" />
-      <option name="MAIN_CLASS_NAME" value="simple_service.restful_service.wms.TileDaoProviderTest" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TileDaoProviderTest.testSetGeoPackages" type="TestNG" temporary="true" nameIsGenerated="true">
-      <module name="tileprovider-rest-service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="simple_service.restful_service.wms.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="simple_service.restful_service.wms" />
-      <option name="MAIN_CLASS_NAME" value="simple_service.restful_service.wms.TileDaoProviderTest" />
-      <option name="METHOD_NAME" value="testSetGeoPackages" />
+      <option name="MAIN_CLASS_NAME" value="simple_service.restful_service.wms.TileProcessorTest" />
+      <option name="METHOD_NAME" value="testGetMap" />
       <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
@@ -161,7 +147,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TileDaoProviderTest.testSetTileDaos" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="simple_service.restful_service" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="tileprovider-rest-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="simple_service.restful_service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="simple_service.restful_service" />
+      <option name="TEST_OBJECT" value="PACKAGE" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="simple_service.restful_service.wms" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="tileprovider-rest-service" />
       <extension name="coverage">
         <pattern>
@@ -170,9 +172,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="simple_service.restful_service.wms" />
-      <option name="MAIN_CLASS_NAME" value="simple_service.restful_service.wms.TileDaoProviderTest" />
-      <option name="METHOD_NAME" value="testSetTileDaos" />
-      <option name="TEST_OBJECT" value="METHOD" />
+      <option name="TEST_OBJECT" value="PACKAGE" />
       <properties />
       <listeners />
       <method v="2">
@@ -181,19 +181,19 @@
     </configuration>
     <list>
       <item itemvalue="Spring Boot.Application" />
-      <item itemvalue="TestNG.GetMapResponseTest.testGetHeaders" />
-      <item itemvalue="TestNG.GetMapResponseTest" />
-      <item itemvalue="TestNG.TileDaoProviderTest.testSetGeoPackages" />
-      <item itemvalue="TestNG.TileDaoProviderTest.testSetTileDaos" />
-      <item itemvalue="TestNG.TileDaoProviderTest" />
+      <item itemvalue="TestNG.TileProcessorTest.testAppendBufferedImage4" />
+      <item itemvalue="TestNG.TileProcessorTest" />
+      <item itemvalue="TestNG.TileProcessorTest.testGetMap" />
+      <item itemvalue="TestNG.simple_service.restful_service.wms" />
+      <item itemvalue="TestNG.simple_service.restful_service" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="TestNG.TileDaoProviderTest" />
-        <item itemvalue="TestNG.GetMapResponseTest" />
-        <item itemvalue="TestNG.TileDaoProviderTest.testSetTileDaos" />
-        <item itemvalue="TestNG.TileDaoProviderTest.testSetGeoPackages" />
-        <item itemvalue="TestNG.GetMapResponseTest.testGetHeaders" />
+        <item itemvalue="TestNG.simple_service.restful_service" />
+        <item itemvalue="TestNG.TileProcessorTest.testGetMap" />
+        <item itemvalue="TestNG.simple_service.restful_service.wms" />
+        <item itemvalue="TestNG.TileProcessorTest" />
+        <item itemvalue="TestNG.TileProcessorTest.testAppendBufferedImage4" />
       </list>
     </recent_temporary>
   </component>
@@ -231,6 +231,8 @@
       <workItem from="1568304058897" duration="40682000" />
       <workItem from="1569432086822" duration="3157000" />
       <workItem from="1569610999386" duration="18242000" />
+      <workItem from="1569963977630" duration="8523000" />
+      <workItem from="1570128986249" duration="18742000" />
     </task>
     <task id="LOCAL-00001" summary="Working prototype">
       <created>1568222836981</created>
@@ -330,16 +332,24 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java</url>
-          <line>54</line>
-          <option name="timeStamp" value="37" />
+          <line>120</line>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java</url>
-          <line>67</line>
-          <option name="timeStamp" value="38" />
+          <line>123</line>
+          <option name="timeStamp" value="40" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/gs_rest_service$simple_service_restful_service.ic" NAME="simple_service.restful_service Coverage Results" MODIFIED="1570553981791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>simple_service.restful_service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/gs_rest_service$simple_service_restful_service_wms.ic" NAME="simple_service.restful_service.wms Coverage Results" MODIFIED="1570552791833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>simple_service.restful_service.wms.*</FILTER>
+    </SUITE>
   </component>
   <component name="masterDetails">
     <states>

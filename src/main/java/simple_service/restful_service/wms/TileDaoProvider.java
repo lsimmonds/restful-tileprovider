@@ -11,7 +11,7 @@ import java.util.List;
 public class TileDaoProvider {
     protected List<GeoPackage> geoPackages = new ArrayList<>();
     private GetMapRequest mapRequest;
-    private List<TileDao> tileDaos = new ArrayList<>();
+    protected List<TileDao> tileDaos = new ArrayList<>();
 
     public TileDaoProvider() {
     }
