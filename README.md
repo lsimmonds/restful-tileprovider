@@ -36,4 +36,4 @@ using in our service call (colons in the query parameter are changed to dashes i
 it will be looking for a file called "NOMS-BlueMarbleA.gpkg"
 If there are multiple layers in the request and a file exists for each layer Tileprovder can display them
 simultaneously. In order to see all the layers, however, the overlapping layers must either be transparent or
-Tileprovider must be complaied with the "transparent" configuration parameter set to true.
+Tileprovider must be compiled with the "transparent" configuration parameter set to true.
