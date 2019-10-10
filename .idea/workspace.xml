@@ -234,7 +234,7 @@
       <workItem from="1569610999386" duration="18242000" />
       <workItem from="1569963977630" duration="8523000" />
       <workItem from="1570128986249" duration="20308000" />
-      <workItem from="1570645673448" duration="3853000" />
+      <workItem from="1570645673448" duration="5569000" />
     </task>
     <task id="LOCAL-00001" summary="Working prototype">
       <created>1568222836981</created>
@@ -299,7 +299,14 @@
       <option name="project" value="LOCAL" />
       <updated>1570554131459</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fill in readme">
+      <created>1570721863166</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1570721863166</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -335,7 +342,8 @@
     <MESSAGE value="Add transparency for secondary layers" />
     <MESSAGE value="Write a unit test" />
     <MESSAGE value="Finsih all major unit tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finsih all major unit tests" />
+    <MESSAGE value="Fill in readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fill in readme" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
