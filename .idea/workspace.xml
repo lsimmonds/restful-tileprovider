@@ -2,16 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ce67d73-f435-4159-97ae-740c67ee15cc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/simple_service/restful_service/wms/TileProcessorTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileDaoProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileDaoProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/simple_service/restful_service/wms/TileProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="103" />
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
@@ -232,7 +233,8 @@
       <workItem from="1569432086822" duration="3157000" />
       <workItem from="1569610999386" duration="18242000" />
       <workItem from="1569963977630" duration="8523000" />
-      <workItem from="1570128986249" duration="18742000" />
+      <workItem from="1570128986249" duration="20308000" />
+      <workItem from="1570645673448" duration="3853000" />
     </task>
     <task id="LOCAL-00001" summary="Working prototype">
       <created>1568222836981</created>
@@ -290,7 +292,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569621828811</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Finsih all major unit tests">
+      <created>1570554131459</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1570554131459</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -325,7 +334,8 @@
     <MESSAGE value="More clean up, add Debug config var" />
     <MESSAGE value="Add transparency for secondary layers" />
     <MESSAGE value="Write a unit test" />
-    <option name="LAST_COMMIT_MESSAGE" value="Write a unit test" />
+    <MESSAGE value="Finsih all major unit tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finsih all major unit tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
